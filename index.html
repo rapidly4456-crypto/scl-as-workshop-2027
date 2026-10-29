@@ -22,6 +22,7 @@
   --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
   --r:18px; --r-sm:12px;
   --tab-h:64px;
+  --t1:#1c69d4; --t2:#14a05a; --t3:#e07a12; --t4:#9b4dd6;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -87,10 +88,13 @@ img{display:block;max-width:100%}
 .intro b{color:var(--tx);font-weight:700}
 
 /* countdown */
-.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}
-.count div{background:var(--bg2);border-radius:var(--r-sm);padding:12px 4px 10px;text-align:center}
-.count b{display:block;font-size:24px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.count span{font-size:11px;color:var(--tx3);font-weight:600}
+.count{display:grid;grid-template-columns:repeat(4,1fr);margin-top:22px;background:#0b0b0c;color:#fff;border-radius:var(--r);padding:16px 6px 14px}
+.count::before{content:"워크샵 시작까지  ·  11.20 (금) 09:00";grid-column:1/-1;font-size:12px;font-weight:600;color:#8fb6f2;letter-spacing:.01em;padding:0 12px 10px}
+.count div{padding:2px 4px;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
+.count div:first-of-type{border-left:0}
+.count b{display:block;font-size:28px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.count span{font-size:11px;color:rgba(255,255,255,.5);font-weight:600}
+@media (prefers-color-scheme: dark){.count{background:#17191d;border:1px solid var(--line2)}}
 
 /* list rows */
 .rows{margin:0;padding:0;list-style:none}
@@ -157,18 +161,26 @@ img{display:block;max-width:100%}
 
 /* timeline */
 .tl{list-style:none;margin:0;padding:0}
-.tl li{display:grid;grid-template-columns:58px 1fr;gap:12px;position:relative}
-.tl .tm{padding-top:15px;text-align:right;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tl li{display:grid;grid-template-columns:50px 1fr;gap:22px;position:relative}
+.tl li::before{content:"";position:absolute;left:60px;top:0;bottom:0;width:2px;background:var(--line)}
+.tl li:first-child::before{top:22px}
+.tl li:last-child::before{bottom:auto;height:22px}
+.tl li::after{content:"";position:absolute;left:55px;top:17px;width:8px;height:8px;border-radius:50%;background:var(--bg);border:2px solid var(--tx3)}
+.tl li.team::after{border-color:var(--ac);background:var(--ac)}
+.tl li.meal::after{border-color:var(--warn);background:var(--warn)}
+.tl li.now::after{border-color:var(--ok);background:var(--ok);box-shadow:0 0 0 4px var(--ok-soft)}
+.tl li.break::after{top:12px;left:56px;width:6px;height:6px}
+.tl .tm{padding-top:12px;text-align:right;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .tl .tm small{display:block;font-size:12px;font-weight:500;color:var(--tx3)}
-.tl .bx{border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin:4px 0;background:var(--card)}
+.tl .bx{border:1px solid var(--line);border-radius:14px;padding:11px 14px;margin:5px 0;background:var(--card)}
 .tl .bx .t{font-weight:700;font-size:15px;letter-spacing:-.02em;display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
 .tl .bx .m{font-size:13px;color:var(--tx2);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 10px}
 .tl .bx .m span{display:inline-flex;align-items:center;gap:4px}
 .tl .bx .m svg{width:13px;height:13px;color:var(--tx3)}
 .dur{flex:none;font-size:12px;font-weight:600;color:var(--tx3);background:var(--bg2);border-radius:6px;padding:1px 7px;margin-top:1px}
-.tl li.break .bx{background:transparent;border-style:dashed;padding:9px 14px}
-.tl li.break .bx .t{font-weight:600;color:var(--tx3);font-size:14px}
-.tl li.break .tm{padding-top:10px;color:var(--tx3)}
+.tl li.break .bx{background:none;border:0;padding:6px 0}
+.tl li.break .bx .t{font-weight:600;color:var(--tx3);font-size:14px;justify-content:flex-start}
+.tl li.break .tm{padding-top:7px;color:var(--tx3)}
 .tl li.meal .bx{background:var(--warn-soft);border-color:transparent}
 .tl li.team .bx{background:var(--ac-soft);border-color:transparent}
 .tl li.now .bx{border:2px solid var(--ok);padding:12px 13px}
@@ -179,17 +191,22 @@ img{display:block;max-width:100%}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 
 /* teams */
-.talk{display:flex;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
-.talk:first-child{border-top:0}
-.talk .tg{font-size:12px;font-weight:700;color:var(--ac)}
-.talk .t{font-weight:700;letter-spacing:-.02em}
-.talk .w{font-size:13px;color:var(--tx2)}
+#talks .talk{display:flex;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+#talks .talk:first-child{border-top:0}
+#talks .talk .tg{font-size:12px;font-weight:700;color:var(--ac)}
+#talks .talk .t{font-weight:700;letter-spacing:-.02em}
+#talks .talk .w{font-size:13px;color:var(--tx2)}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 14px;padding:0 16px}
 .chips::-webkit-scrollbar{display:none}
 .chips button{flex:none;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);font-weight:600;font-size:14px;background:var(--card)}
 .chips button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
-.team-hd{padding:20px 18px 18px}
-.team-no{font-size:13px;font-weight:700;color:var(--ac)}
+[data-t="1"]{--tc:var(--t1)}[data-t="2"]{--tc:var(--t2)}[data-t="3"]{--tc:var(--t3)}[data-t="4"]{--tc:var(--t4)}
+#tchips button{display:inline-flex;align-items:center;gap:7px}
+#tchips button::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc)}
+#tchips button.on{background:var(--tc);border-color:var(--tc);color:#fff}
+#tchips button.on::before{background:#fff}
+.team-hd{padding:20px 18px 18px;border-top:4px solid var(--tc);background:linear-gradient(180deg,color-mix(in srgb,var(--tc) 9%,transparent),transparent 70%)}
+.team-no{font-size:13px;font-weight:700;color:var(--tc)}
 .team-t{font-size:21px;line-height:1.3;font-weight:800;letter-spacing:-.03em;margin:6px 0 0}
 .team-s{font-size:14px;color:var(--tx2);margin-top:4px}
 .team-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
@@ -201,7 +218,7 @@ img{display:block;max-width:100%}
 .mem .n{font-weight:700}
 .mem .r{font-size:13px;color:var(--tx2)}
 .mem .x{margin-left:auto;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--bg2);color:var(--tx2)}
-.mem .x.lead{background:var(--ac);color:#fff}
+.mem .x.lead{background:var(--tc,var(--ac));color:#fff}
 .mem li.hl{background:var(--ac-soft)}
 
 /* seats */
@@ -215,7 +232,7 @@ img{display:block;max-width:100%}
 .st{position:absolute;border-radius:6px;background:var(--card);border:1px solid var(--line2);font-size:11px;font-weight:600;display:grid;place-items:center;white-space:nowrap;transition:transform .15s,background .15s;z-index:1}
 .st.hl{background:var(--ac);color:#fff;border-color:var(--ac);transform:scale(1.18);z-index:3;box-shadow:0 4px 14px rgba(28,105,212,.45)}
 .room.dim .st:not(.hl){opacity:.35}
-.st.t1{border-left:3px solid #1c69d4}.st.t2{border-left:3px solid #14a05a}.st.t3{border-left:3px solid #e07a12}.st.t4{border-left:3px solid #9b4dd6}
+.st.t1{border-left:3px solid var(--t1)}.st.t2{border-left:3px solid var(--t2)}.st.t3{border-left:3px solid var(--t3)}.st.t4{border-left:3px solid var(--t4)}
 .tkey{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--tx2);margin:2px 0 0}
 .tkey i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .scrollhint{font-size:12px;color:var(--tx3);text-align:center;margin:4px 0 0}
@@ -225,7 +242,9 @@ img{display:block;max-width:100%}
 .grp h3{font-size:14px;font-weight:700;margin:0 0 8px;display:flex;justify-content:space-between}
 .grp h3 span{color:var(--tx3);font-weight:500}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.pgrid button{text-align:left;background:var(--bg2);border-radius:12px;padding:10px 11px}
+.pgrid button{text-align:left;background:var(--bg2);border-radius:12px;padding:10px 11px;position:relative}
+.pgrid button[data-t]{padding-left:14px}
+.pgrid button[data-t]::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--tc)}
 .pgrid b{display:block;font-size:15px;letter-spacing:-.02em}
 .pgrid small{display:block;font-size:12px;color:var(--tx3);min-height:18px}
 .stat{display:flex;gap:8px;margin-bottom:4px}
@@ -237,9 +256,10 @@ img{display:block;max-width:100%}
 /* tab bar */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 .tabs nav{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--tab-h)}
-.tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;color:var(--tx3)}
-.tabs a svg{width:23px;height:23px}
-.tabs a.on{color:var(--tx)}
+.tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:600;color:var(--tx3)}
+.tabs a svg{width:23px;height:23px;box-sizing:content-box;padding:3px 16px;border-radius:999px;transition:background .2s}
+.tabs a.on{color:var(--ac)}
+.tabs a.on svg{background:var(--ac-soft)}
 
 /* sheet */
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -531,6 +551,7 @@ function showTeam(no, hl){
   curTeam = no;
   $("#tchips").querySelectorAll("button").forEach(b => b.classList.toggle("on", +b.dataset.t === no));
   const t = teamOf(no), lead = t.m.find(m => m[4] === "조장"), sec = t.m.find(m => m[4] === "서기");
+  $("#team").dataset.t = no;
   $("#team").innerHTML = `<div class="team-hd">
       <div class="team-no">${t.no}조 · 발표 ${esc(t.time)}</div>
       <div class="team-t">${esc(t.t)}</div>${t.sub ? `<div class="team-s">${esc(t.sub)}</div>` : ""}
@@ -582,7 +603,7 @@ function renderPeople(){
   const out = W.attendees.map(g => {
     const list = g.p.filter(([n]) => !q || n.includes(q) || g.g.includes(q));
     if (!list.length) return "";
-    return `<div class="grp"><h3>${esc(g.g)}<span>${list.length}명</span></h3><div class="pgrid">${list.map(([n, role]) => { const p = P[n]; return `<button data-p="${esc(n)}"><b>${esc(n)}</b><small>${esc([role, p.team ? p.team + "조" : ""].filter(Boolean).join(" · "))}</small></button>`; }).join("")}</div></div>`;
+    return `<div class="grp"><h3>${esc(g.g)}<span>${list.length}명</span></h3><div class="pgrid">${list.map(([n, role]) => { const p = P[n]; return `<button data-p="${esc(n)}"${p.team ? ` data-t="${p.team}"` : ""}><b>${esc(n)}</b><small>${esc([role, p.team ? p.team + "조" : ""].filter(Boolean).join(" · "))}</small></button>`; }).join("")}</div></div>`;
   }).join("");
   $("#plist").innerHTML = out || `<div class="empty">검색 결과가 없어요.</div>`;
   $("#plist").querySelectorAll("[data-p]").forEach(b => b.onclick = () => openPerson(b.dataset.p));
