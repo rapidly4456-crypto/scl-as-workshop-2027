@@ -22,7 +22,7 @@ window.WS = {
     ]
   },
 
-  // type: talk | break | meal | team | etc
+  // type: talk | break | meal | team | etc   (key: 카드키 반납 강조 박스)
   days: [
     {
       id: "d1", label: "Day 1", date: "2026-11-20", dateLabel: "11.20 금",
@@ -53,9 +53,10 @@ window.WS = {
     {
       id: "d2", label: "Day 2", date: "2026-11-21", dateLabel: "11.21 토",
       items: [
-        { s: "07:00", e: "08:20", t: "아침 식사", loc: "D동 B1F 비스트로 비", type: "meal" },
-        { s: "08:20", e: "09:50", t: "개인 정비 & Check out", who: "서채은 대리", loc: "C동 1층 Front Desk", type: "etc" },
-        { s: "09:50", e: "", t: "사진 촬영 & 귀가", type: "etc" }
+        { s: "07:00", e: "09:00", t: "아침 식사 & 개인 정비", loc: "D동 B1F 비스트로 비", type: "meal" },
+        { s: "09:00", e: "09:30", t: "Check-out", who: "서채은 대리", loc: "C동 1층 Front Desk", type: "etc",
+          key: { t: "객실 카드키 반납 필수", d: "퇴실 전 AS운영팀에 객실 키 반납" } },
+        { s: "09:30", e: "", t: "사진 촬영 & 귀가", type: "etc" }
       ]
     }
   ],

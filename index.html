@@ -189,6 +189,16 @@ img{display:block;max-width:100%}
 .tl li.now .bx{border:2px solid var(--ok);padding:12px 13px}
 .tl li.now .tm{color:var(--ok)}
 .tl li.past{opacity:.45}
+/* 카드키 반납 강조 */
+.tl li.key{--kc:#f97316;--kc-tx:#c2410c;--kc-bg:#fff7f1;--kc-ring:#ffe3d1;--kc-line:#fdba74}
+:root[data-theme="dark"] .tl li.key{--kc:#fb923c;--kc-tx:#fdba74;--kc-bg:#2a1a0e;--kc-ring:#3b2412;--kc-line:#7c3f16}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tl li.key{--kc:#fb923c;--kc-tx:#fdba74;--kc-bg:#2a1a0e;--kc-ring:#3b2412;--kc-line:#7c3f16}}
+.tl li.key .bx{border:2px solid var(--kc);background:var(--kc-bg);padding:10px 13px}
+.tl li.key::after{border-color:var(--kc);background:var(--kc);box-shadow:0 0 0 4px var(--kc-ring)}
+.keycard{display:flex;gap:12px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px dashed var(--kc-line)}
+.keycard svg{width:44px;height:30px;flex:none}
+.keycard b{display:block;font-size:14px;color:var(--kc-tx);letter-spacing:-.02em}
+.keycard span{font-size:12.5px;color:var(--tx2)}
 .badge{display:inline-flex;align-items:center;height:20px;padding:0 7px;border-radius:6px;font-size:11px;font-weight:700;background:var(--ok);color:#fff;letter-spacing:0}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--tx3);margin:16px 0 0 70px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
@@ -419,6 +429,7 @@ const ICON = {
   pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
   seat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="9" width="16" height="7" rx="2"/><path d="M6 16v4M18 16v4M7 9V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg>',
   team:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.6 0 4.4 1.6 5 4"/></svg>',
+  card:'<svg viewBox="0 0 44 30" aria-hidden="true"><rect x="1" y="1" width="42" height="28" rx="5" fill="#f97316"/><rect x="1" y="7" width="42" height="5" fill="#9a3412" opacity=".55"/><rect x="6" y="17" width="9" height="7" rx="1.5" fill="#fde68a"/><rect x="19" y="19" width="18" height="2.5" rx="1.2" fill="#fff" opacity=".8"/></svg>',
   info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'
 };
 
@@ -535,9 +546,10 @@ function renderTL(){
     if (it.loc) meta.push(`<span>${ICON.pin}${esc(it.loc)}</span>`);
     if (it.note) meta.push(`<span class="nt">${esc(it.note)}</span>`);
     const dur = mins(it.s, it.e);
-    return `<li class="${it.type} ${state}">
+    const key = it.key ? `<div class="keycard">${ICON.card}<div><b>${esc(it.key.t)}</b><span>${esc(it.key.d)}</span></div></div>` : "";
+    return `<li class="${it.type} ${state}${it.key ? " key" : ""}">
       <div class="tm">${esc(it.s || it.e)}<small>${it.s ? "~" + esc(it.e) : "까지"}</small></div>
-      <div class="bx"><div class="t"><span>${state === "now" ? '<span class="badge">NOW</span> ' : ""}${esc(it.t)}</span>${dur && it.type !== "break" ? `<span class="dur">${dur}</span>` : ""}</div>${meta.length ? `<div class="m">${meta.join("")}</div>` : ""}</div>
+      <div class="bx"><div class="t"><span>${state === "now" ? '<span class="badge">NOW</span> ' : ""}${esc(it.t)}</span>${dur && it.type !== "break" ? `<span class="dur">${dur}</span>` : ""}</div>${meta.length ? `<div class="m">${meta.join("")}</div>` : ""}${key}</div>
     </li>`;
   }).join("");
 }
