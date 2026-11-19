@@ -241,7 +241,8 @@ img{display:block;max-width:100%}
 .room .tb{position:absolute;border-radius:10px;background:var(--card);border:1px solid var(--line2)}
 .room .tb span{position:absolute;left:50%;top:-22px;transform:translateX(-50%);font-size:12px;font-weight:800;color:var(--tx2);white-space:nowrap}
 .room .ex{position:absolute;border-radius:8px;border:1px dashed var(--line2);display:grid;place-items:center;font-size:11px;color:var(--tx3);font-weight:600}
-.room .door{position:absolute;font-size:10px;font-weight:700;color:var(--tx3);writing-mode:vertical-rl;letter-spacing:.2em}
+.room .door{position:absolute;font-size:10px;font-weight:700;color:var(--tx3);writing-mode:vertical-rl;letter-spacing:.2em;white-space:nowrap}
+.room .door.h{writing-mode:horizontal-tb}
 .st{position:absolute;border-radius:6px;background:var(--card);border:1px solid var(--line2);font-size:11px;font-weight:600;display:grid;place-items:center;white-space:nowrap;transition:transform .15s,background .15s;z-index:1}
 .st.hl{background:var(--ac);color:#fff;border-color:var(--ac);transform:scale(1.18);z-index:3;box-shadow:0 4px 14px rgba(28,105,212,.45)}
 .room.dim .st:not(.hl){opacity:.35}
@@ -587,7 +588,7 @@ function seats(){
   let h = `<div class="scr" style="${box(M.screen)}">SCREEN</div>`;
   h += M.tables.map(t => `<div class="tb" style="${box(t.r)}"><span>${esc(t.label)}</span></div>`).join("");
   h += M.extras.map(t => `<div class="ex" style="${box(t.r)}">${esc(t.label)}</div>`).join("");
-  h += `<div class="door" style="right:6px;top:8px">출입문</div>`;
+  h += (M.doors || []).map(d => `<div class="door${d.v ? "" : " h"}" style="left:${Math.max(0, (d.r[0]-rx)*k)}px;top:${Math.max(0, (d.r[1]-ry)*k)}px">출입문</div>`).join("");
   h += M.seats.map((s, i) => { const p = P[s[0]]; return `<button class="st ${p && p.team ? "t" + p.team : ""}" data-i="${i}" style="${box([s[1], s[2], M.seatW, M.seatH])}">${esc(s[0])}</button>`; }).join("");
   room.innerHTML = h;
   room.querySelectorAll(".st").forEach(b => b.onclick = () => { const n = M.seats[+b.dataset.i][0]; $("#sq").value = n; findSeat(n, false); openPerson(n); });
